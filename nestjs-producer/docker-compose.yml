@@ -1,0 +1,32 @@
+version: "3.7"
+services:
+
+  nestjs:
+    image: "node:current-alpine"
+    privileged: true
+    tty: true
+    stdin_open: true
+    restart: always
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=devlopment
+    volumes:
+      - ./src/:/home/node/app
+    ports:
+      - "3000:3000"
+    command: "npm run start:dev"
+    networks:
+      - backend
+      - kafka_network
+
+
+networks:
+  backend:
+  kafka_network:
+    external: true
+
+volumes:
+  dbdata:
+    driver: local
+    labels:
+      mf.project.name: nestjs-apache-kafka-producer

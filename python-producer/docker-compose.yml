@@ -1,0 +1,22 @@
+version: "3.7"
+services:
+
+  producer:
+    build:
+      context: .
+    restart: always
+    working_dir: /usr/src/app
+    volumes:
+      - .:/usr/src/app
+    networks:
+      - kafka_network
+
+networks:
+  kafka_network:
+    external: true
+
+volumes:
+  dbdata:
+    driver: local
+    labels:
+      mf.project.name: kafka-first-steps-producer

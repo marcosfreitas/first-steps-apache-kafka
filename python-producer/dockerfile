@@ -1,0 +1,12 @@
+FROM python:alpine
+
+WORKDIR /usr/src/app
+
+COPY requirements.txt ./
+RUN pip install --default-timeout=100 --no-cache-dir -r requirements.txt &&\
+    virtualenv -p python3 .env3 &&\
+    source .env3/bin/activate
+
+COPY . .
+
+CMD ["python", "./producer.py"]

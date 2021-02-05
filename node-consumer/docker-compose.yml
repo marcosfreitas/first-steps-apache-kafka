@@ -1,0 +1,27 @@
+version: "3.7"
+services:
+
+  consumer:
+    build:
+      context: .
+    restart: always
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=devlopment
+    volumes:
+      - .:/home/node/app
+    networks:
+      - backend
+      - kafka_network
+    command: "npm run start"
+
+networks:
+  backend:
+  kafka_network:
+    external: true
+
+volumes:
+  dbdata:
+    driver: local
+    labels:
+      mf.project.name: kafka-first-steps-consumer

@@ -1,34 +1,43 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Inject, OnModuleInit } from '@nestjs/common';
 import { Client, ClientKafka, MessagePattern, Payload, Transport } from "@nestjs/microservices";
+import { Producer } from '@nestjs/microservices/external/kafka.interface';
 import { AppService } from './app.service';
 
 @Controller()
-export class AppController {
-  constructor(private readonly appService: AppService) { }
+export class AppController implements OnModuleInit {
 
-  @Client({
-    transport: Transport.KAFKA,
-    options: {
-      client: {
-        clientId: 'kafkaSample',
-        brokers: ['apache-zookeeper_kafka_1:9092'],
-      },
-      consumer: {
-        groupId: 'my-kafka-consumer' // Should be the same thing we give in consumer
-      }
+  private kafkaProducer: Producer;
+
+  constructor(
+      private readonly appService: AppService,
+      @Inject("KAFKA_SERVICE")
+      private clientKafka: ClientKafka,
+    ) {
+        console.log("client kafka injected");
     }
-  })
-  client: ClientKafka;
 
-  async onModuleInit() {
-    // Need to subscribe to topic
-    // so that we can get the response from kafka microservice
-    this.client.subscribeToResponseOf('my-first-topic');
-    await this.client.connect();
-  }
+    async onModuleInit() {
+        // Need to subscribe to topic
+        // so that we can get the response from kafka microservice
+        //this.clientKafka.subscribeToResponseOf('horses');
+        this.kafkaProducer = await this.clientKafka.connect();
+    }
 
   @Get()
-  getHello() {
-    return this.client.send('my-first-topic', {data:{ fruits: ["apple","banana","pineapple"]}}); // args - topic, message
+  async goHorse() {
+
+        const result = await this.kafkaProducer.send({
+          topic:"horses",
+          messages: [
+              {
+                  key: Math.random()+"",
+                  value: JSON.stringify(
+                    { fruits: ["apple","banana","pineapple"] }
+                  )
+              }
+          ]
+      });
+
+      console.log('result', result);
   }
 }

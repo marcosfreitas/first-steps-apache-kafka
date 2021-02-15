@@ -15,15 +15,17 @@ services:
     ports:
       - "3000:3000"
     command: "npm run start:dev"
-    networks:
-      - backend
-      - kafka_network
+    #networks:
+    #  - backend
+      #- kafka_network
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
 
 
-networks:
-  backend:
-  kafka_network:
-    external: true
+#networks:
+#  backend:
+#  kafka_network:
+#    external: true
 
 volumes:
   dbdata:

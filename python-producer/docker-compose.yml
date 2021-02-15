@@ -8,12 +8,14 @@ services:
     working_dir: /usr/src/app
     volumes:
       - .:/usr/src/app
-    networks:
-      - kafka_network
+    #networks:
+    #  - kafka_network
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
 
-networks:
-  kafka_network:
-    external: true
+#networks:
+#  kafka_network:
+#    external: true
 
 volumes:
   dbdata:

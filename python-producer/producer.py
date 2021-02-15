@@ -6,7 +6,7 @@ from datetime import datetime
 
 # Create an instance of the Kafka producer
 producer = KafkaProducer(
-    bootstrap_servers='apache-zookeeper_kafka_1:9092',
+    bootstrap_servers='host.docker.internal:9094',
     #api_version=(2,6,0),
     value_serializer=lambda v: str(v).encode('utf-8')
 )

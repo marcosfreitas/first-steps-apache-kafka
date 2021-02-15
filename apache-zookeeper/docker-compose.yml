@@ -1,13 +1,15 @@
----
 version: "3.7"
 services:
   zookeeper:
+    container_name: zookeeper
     image: confluentinc/cp-zookeeper:latest
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
-    networks:
-      - ecosystem
+    #networks:
+    #  - ecosystem
+    volumes:
+      - ./kafka_data:/var/lib/kafka/data
 
   kafka:
     # "`-._,-'"`-._,-'"`-._,-'"`-._,-'"`-._,-'"`-._,-'"`-._,-'"`-._,-'"`-._,-
@@ -28,27 +30,52 @@ services:
     # "`-._,-'"`-._,-'"`-._,-'"`-._,-'"`-._,-'"`-._,-'"`-._,-'"`-._,-'"`-._,-
     #
     image: confluentinc/cp-kafka:latest
+    container_name: kafka
     depends_on:
       - zookeeper
     ports:
       - 9092:9092
+      - 9094:9094
     environment:
       KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://apache-zookeeper_kafka_1:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-    networks:
-      - ecosystem
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_LISTENERS: INTERNAL://:9092,OUTSIDE://:9094
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9092,OUTSIDE://host.docker.internal:9094
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,OUTSIDE:PLAINTEXT
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1" # docker gateway
+    #networks:
+    #  - ecosystem
 
-networks:
-  ecosystem:
-    external: true
-    name: kafka_network
+
+  kafka-control:
+    container_name: kafka-control
+    image: confluentinc/cp-enterprise-control-center:6.0.1
+    hostname: control-center
+    depends_on:
+      - kafka
+    ports:
+      - "9021:9021"
+    environment:
+      CONTROL_CENTER_BOOTSTRAP_SERVERS: 'kafka:9092'
+      CONTROL_CENTER_REPLICATION_FACTOR: 1
+      #CONTROL_CENTER_KSQL_KSQLDB1_URL: "http://ksqldb-server:8088"
+      #CONTROL_CENTER_KSQL_KSQLDB1_ADVERTISED_URL: "http://localhost:8088"
+      #CONTROL_CENTER_SCHEMA_REGISTRY_URL: "http://schema-registry:8081"
+      #CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS: 1
+      #CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1
+      #CONFLUENT_METRICS_TOPIC_REPLICATION: 1
+      PORT: 9021
+
+#networks:
+#  ecosystem:
+#    external: true
+#    name: kafka_network
 
 volumes:
-  dbdata:
+  kafka_data:
     driver: local
     labels:
       mf.project.name: apache-kafka

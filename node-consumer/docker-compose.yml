@@ -12,13 +12,15 @@ services:
       - .:/home/node/app
     networks:
       - backend
-      - kafka_network
+      #- kafka_network
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
     command: "npm run start"
 
-networks:
-  backend:
-  kafka_network:
-    external: true
+#networks:
+#  backend:
+#  kafka_network:
+#    external: true
 
 volumes:
   dbdata:

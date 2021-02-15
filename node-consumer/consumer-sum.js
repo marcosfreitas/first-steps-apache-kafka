@@ -3,7 +3,7 @@ const Kafka = require('no-kafka');
 var valueSum = 0;
 
 // Create an instance of the Kafka consumer
-const consumer = new Kafka.SimpleConsumer({"connectionString":"apache-zookeeper_kafka_1:9092"})
+const consumer = new Kafka.SimpleConsumer({"connectionString":"host.docker.internal:9094"})
 var data = function (messageSet) {
     messageSet.forEach(function (m) {
 

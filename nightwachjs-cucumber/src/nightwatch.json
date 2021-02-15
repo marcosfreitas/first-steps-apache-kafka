@@ -1,0 +1,29 @@
+{
+    "src_folders": [
+        "./tests"
+    ],
+    "output_folder": "./reports",
+    "page_objects_path": "./page_objects",
+    "disable_colors": false,
+    "test_workers": false,
+
+    "selenium": {
+        "start_process": false,
+        "port": 4444,
+        "host": "standalone-chrome"
+    },
+
+    "test_settings": {
+        "default": {
+            "desiredCapabilities": {
+                "browserName": "chrome",
+                "chromeOptions": {
+                    "args": [
+                        "--no-sandbox"
+                    ]
+                },
+                "acceptSslCerts": true
+            }
+        }
+    }
+}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="1"
+            failures="0"
+            tests="0">
+
+  <testsuite name="test"
+    errors="1" failures="0" hostname="" id="" package="test" skipped="0"
+    tests="0" time="0.000" timestamp="">
+  
+
+  
+    <system-err>
+        Error: An error occurred while retrieving a new session: &#34;getaddrinfo EAI_AGAIN standalone-chrome standalone-chrome:4444&#34;
+       at emitErrorNT (internal/streams/destroy.js:91:8)
+       at emitErrorAndCloseNT (internal/streams/destroy.js:59:3)
+    </system-err>
+  
+
+    
+    <error message="An error occurred while retrieving a new session: &#34;getaddrinfo EAI_AGAIN standalone-chrome standalone-chrome:4444&#34;"><![CDATA[
+      Error: An error occurred while retrieving a new session: &#34;getaddrinfo EAI_AGAIN standalone-chrome standalone-chrome:4444&#34;
+    at Selenium2Protocol.handleSessionCreateError (/var/www/html/c4n/first-steps-apache-kafka/nightwachjs-cucumber/src/node_modules/nightwatch/lib/transport/transport.js:103:15)
+    at HttpRequest.request.on.err (/var/www/html/c4n/first-steps-apache-kafka/nightwachjs-cucumber/src/node_modules/nightwatch/lib/transport/transport.js:159:32)
+    at HttpRequest.emit (events.js:198:13)
+    at ClientRequest.originalIssuer.on.args (/var/www/html/c4n/first-steps-apache-kafka/nightwachjs-cucumber/src/node_modules/nightwatch/lib/http/request.js:142:19)
+    at ClientRequest.emit (events.js:203:15)
+    at Socket.socketErrorListener (_http_client.js:401:9)
+    at Socket.emit (events.js:198:13)
+    at emitErrorNT (internal/streams/destroy.js:91:8)
+    at emitErrorAndCloseNT (internal/streams/destroy.js:59:3)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+      ]]></error>  
+
+  
+  </testsuite>
+</testsuites>

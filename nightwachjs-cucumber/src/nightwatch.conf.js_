@@ -1,0 +1,31 @@
+//const chromedriver = require('chromedriver');
+
+//const { spawn } = require('child_process');
+//const ls = spawn('ls', ['-lh', '/home/node/app/node_modules/chromedriver/lib/chromedriver/']);
+
+/*ls.stdout.on('data', (data) => {
+  console.log(`stdout: ${data}`);
+});*/
+/*
+module.exports = {
+  src_folders : ["tests"], //tests is a folder in workspace which has the step definitions
+  page_objects_path: 'page_objects/', //page_objects folder where selectors are saved
+  test_settings: {
+    default: {
+      webdriver: {
+        start_process: true,
+        server_path: chromedriver.path,
+        port: 4444,
+        cli_args: ['--port=4444']
+      },
+      desiredCapabilities: {
+        browserName: 'chrome'
+      }
+    }
+  }
+};
+*/
+
+module.exports = (function (settings) {
+  return settings;
+})(require("./nightwatch.json"));

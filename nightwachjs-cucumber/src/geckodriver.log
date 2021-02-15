@@ -1,0 +1,5 @@
+1612979064201	geckodriver	INFO	Listening on 127.0.0.1:4444
+1612979064302	webdriver::server	DEBUG	-> GET /status 
+1612979064302	webdriver::server	DEBUG	<- 200 OK {"value":{"message":"","ready":true}}
+1612979064389	webdriver::server	DEBUG	-> POST /session {"capabilities":{"browserName":"firefox","acceptInsecureCerts":true,"name":"Demo"},"desiredCapabilities":{"browserName":"firefox","acceptInsecureCerts":true,"name":"Demo"}}
+1612979064389	webdriver::server	DEBUG	<- 500 Internal Server Error {"value":{"error":"session not created","message":"Expected browser binary location, but unable to find binary in default location, no 'moz:firefoxOptions.binary' capability provided, and no binary flag set on the command line","stacktrace":""}}

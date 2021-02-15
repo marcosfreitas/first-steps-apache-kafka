@@ -1,0 +1,65 @@
+version: "3.7"
+services:
+
+  worker:
+    container_name: worker
+    build:
+      context: .
+    restart: on-failure
+    privileged: true
+    tty: true
+    stdin_open: true
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=devlopment
+    volumes:
+      - ./src:/home/node/app
+    networks:
+      - backend
+    ports:
+      - 3000:3000
+      #- kafka_network
+    #extra_hosts:
+    #  - "host.docker.internal:172.17.0.1"
+    depends_on:
+      - standalone-chrome
+    command: bash -c 'dockerize -wait tcp://standalone-chrome:4444 -timeout 60s -wait-retry-interval 10s node server.js'
+    #e2e-test -- features/google.feature"
+
+    links:
+      - "standalone-chrome"
+
+  #node-chrome:
+  #  container_name: node-chrome
+  #  image: selenium/node-chrome
+  #  volumes:
+  #    - /dev/shm:/dev/shm
+  #  ports:
+  #    - "6900:5900"
+  #  networks:
+  #    - backend
+    #extra_hosts:
+    #  - "host.docker.internal:172.17.0.1"
+
+  standalone-chrome:
+    container_name: standalone-chrome
+    image: selenium/standalone-chrome
+    volumes:
+      - /dev/shm:/dev/shm
+    ports:
+      - "4444:4444"
+    networks:
+      - backend
+    #extra_hosts:
+    #  - "host.docker.internal:172.17.0.1"
+
+networks:
+  backend:
+  #kafka_network:
+  #  external: true
+
+volumes:
+  dbdata:
+    driver: local
+    labels:
+      mf.project.name: nigthwatchjs-cucumber

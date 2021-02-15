@@ -1,0 +1,31 @@
+FROM node:current-alpine
+
+WORKDIR /home/node/app
+
+COPY ./src .
+
+RUN npm install
+
+# Installing dockerize
+RUN apk update && apk add --no-cache openssl shadow bash
+
+ENV DOCKERIZE_VERSION v0.6.1
+RUN wget https://github.com/jwilder/dockerize/releases/download/${DOCKERIZE_VERSION}/dockerize-alpine-linux-amd64-${DOCKERIZE_VERSION}.tar.gz \
+    && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-${DOCKERIZE_VERSION}.tar.gz \
+    && rm dockerize-alpine-linux-amd64-${DOCKERIZE_VERSION}.tar.gz
+
+
+#RUN apk add chromium
+
+#ENV CHROMEDRIVER_VERSION 89.0.4389.23
+#ENV CHROMEDRIVER_DIR chromedriver
+#RUN mkdir $CHROMEDRIVER_DIR
+
+# Download and install Chromedriver
+#RUN wget -q --continue -P $CHROMEDRIVER_DIR "http://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
+#RUN unzip $CHROMEDRIVER_DIR/chromedriver* -d $CHROMEDRIVER_DIR
+
+# Put Chromedriver into the PATH
+#ENV PATH $CHROMEDRIVER_DIR:$PATH
+
+CMD ["node", "server.js"]

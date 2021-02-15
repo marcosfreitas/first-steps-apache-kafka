@@ -1,0 +1,65 @@
+{
+    "src_folders": [
+        "./tests"
+    ],
+    "output_folder": "./reports",
+    "page_objects_path": "./page_objects",
+    "disable_colors": false,
+    "test_workers": false,
+
+    "webdriver": {
+        "start_process": true,
+        "cli_args": [],
+        "port": 4444
+    },
+
+    "test_settings": {
+        "default": {
+            "webdriver": {
+                "server_path": "node_modules/.bin/geckodriver",
+                "cli_args": [
+                    "--log",
+                    "debug"
+                ]
+            },
+            "desiredCapabilities": {
+                "browserName": "firefox",
+                "acceptInsecureCerts": true
+            }
+        },
+        "chrome": {
+            "webdriver": {
+                "port": 9515,
+                "default_path_prefix": "",
+                "server_path": "node_modules/.bin/chromedriver",
+                "cli_args": [
+                    "--verbose"
+                ],
+                "desiredCapabilities": {
+                    "browserName": "chrome",
+                    "loggingPrefs": {
+                        "driver": "INFO",
+                        "server": "OFF",
+                        "browser": "INFO"
+                    }
+                }
+            }
+        },
+        "selenium_server": {
+            "selenium": {
+                "start_process": true,
+                "host": "localhost",
+                "port": 4444,
+                "server_path": "./bin/selenium-server-standalone-3.10.0.jar",
+                "cli_args": {
+                    "webdriver.gecko.driver": "./bin/geckodriver-0.19",
+                    "webdriver.chrome.driver": "./bin/chromedriver-2.32"
+                }
+            },
+            "desiredCapabilities": {
+                "browserName": "firefox",
+                "acceptSslCerts": true
+            }
+        }
+    }
+}

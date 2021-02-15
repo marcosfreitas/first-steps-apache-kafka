@@ -1,0 +1,21 @@
+{
+  "name": "nightwatchjs-cucumber",
+  "version": "1.0.0",
+  "description": "To learn automation by nightwatch",
+  "main": "google.js",
+  "scripts": {
+    "test": "nightwatch",
+    "e2e-test": "cucumber-js --require cucumber.conf.js --require step-definitions --format node_modules/cucumber-pretty"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chromedriver": "^88.0.0",
+    "cucumber": "^5.1.0",
+    "cucumber-pretty": "^1.5.0",
+    "express": "^4.17.1",
+    "nightwatch": "^1.5.1",
+    "nightwatch-api": "^3.0.1",
+    "selenium-server": "^3.141.59"
+  }
+}
